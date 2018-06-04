@@ -1,0 +1,16 @@
+# IDE
+.vscode
+.idea
+
+# Dependencies
+node_modules/
+
+# Build
+dist/
+.cache/
+
+# Tests
+__coverage__/
+
+# Errors
+yarn-error.log

@@ -1,0 +1,7 @@
+export { default as ErrorPage } from './ErrorPage'
+export { default as ForbiddenPage } from './ForbiddenPage'
+export { default as NotFoundPage } from './NotFoundPage'
+export { default as HomePage } from './HomePage'
+export { default as ChangePasswordPage } from './ChangePasswordPage'
+export { default as PasswordResetPage } from './PasswordResetPage'
+export { default as AccountNotReadyPage } from './AccountNotReadyPage'

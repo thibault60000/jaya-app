@@ -1,0 +1,63 @@
+stages:
+  - install-deps
+  - lint
+  - build
+  - deploy
+
+image: christopher2k/node-python:v1
+
+variables:
+  AWS_ID: 'AKIAIIRRYEZMX6KTTOHQ'
+  AWS_SECRET: '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'
+  AWS_REGION : 'us-east-1'
+  BUCKET : 'app.jaya'
+
+before_script:
+  - mkdir -p ~/.aws && touch ~/.aws/config
+  - printf "[default]\naws_access_key_id = %s\naws_secret_access_key = %s\n" "$AWS_ID" "$AWS_SECRET" > ~/.aws/credentials
+
+
+# JOBS
+install node dependencies:
+  stage: install-deps
+  script: npm install
+  artifacts:
+    name: "dependencies"
+    paths:
+     - node_modules/
+
+
+#run tests:
+#  stage: test
+#  script: npm run test:ci
+#  dependencies:
+#    - install node dependencies
+
+lint code:
+  stage: lint
+  script: npm run lint && npm run lint:test
+  dependencies:
+    - install node dependencies
+
+
+build code:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    name: "distribution"
+    paths:
+     - dist/
+  dependencies:
+    - install node dependencies
+
+
+deploy code:
+  stage: deploy
+  only:
+    - master
+  script:
+    - aws s3 sync dist/ s3://$BUCKET --delete --region $AWS_REGION
+  dependencies:
+    - build code
+    - install node dependencies

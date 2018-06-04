@@ -1,0 +1,19 @@
+{
+    "presets": [
+      "react",
+      ["env", {
+        "include": ["transform-async-to-generator"]
+        }
+      ]
+    ],
+    "plugins": [
+      "react-hot-loader/babel",
+      "transform-object-rest-spread",
+      "transform-class-properties"
+    ],
+    "ignore": [
+      "dist/"
+    ],
+    "comments": false
+  }
+  
